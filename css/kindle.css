@@ -47,16 +47,16 @@ html.night {
     text-decoration: none;
 }
 
+.tempWrapper {
+    position: absolute;
+    right: 3.3%;
+    top: 15%;
+}
+
 #temp {
     font-size: 200px;
     font-size: 18rem;
     display: inline-block;
-}
-
-.tempWrapper {
-    position: absolute;
-    right: 3.3%;
-    top: 10%;
 }
 
 #lastUpdate {

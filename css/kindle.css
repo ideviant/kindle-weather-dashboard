@@ -224,5 +224,5 @@ html.night {
 
 .feelsLike,
 .feelsLike * {
-    font-style: italic;
+    /* font-style: italic; */
 }

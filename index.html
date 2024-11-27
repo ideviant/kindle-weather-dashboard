@@ -98,7 +98,6 @@
             for (var i = 0; i < forecastCount; i++) {
                 var forecast = data.list[i];
                 var feelsLike = tempType == "feelsLike";
-                console.log(forecast);
 
                 tempArray.push(Math.round(forecast.main.temp));
 
@@ -114,16 +113,6 @@
             }
 
             temp.innerHTML = Math.min(...tempArray) + " - " + Math.max(...tempArray) + "<i class=\"wi wi-celsius\"></i>";
-
-
-            console.log(tempArray);
-
-            console.log(Math.min(tempArray));
-            console.log(Math.max(tempArray));
-
-
-
-
             setMoonIconsRotation(data.city.coord.lat)
         }
 

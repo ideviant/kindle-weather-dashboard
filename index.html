@@ -113,7 +113,7 @@
                 forecastsCells[i].icon.style.webkitTransform = null;
             }
 
-            temp.innerHTML = Math.min(...tempArray) + " ~ " + Math.max(...tempArray) + "<i class=\"wi wi-celsius\"></i>";
+            temp.innerHTML = Math.min(...tempArray) + " - " + Math.max(...tempArray) + "<i class=\"wi wi-celsius\"></i>";
 
 
             console.log(tempArray);
@@ -225,7 +225,7 @@
             icon.style.webkitTransform = null;
             // temp.innerHTML = feelsLike ? Math.round(data.main.feels_like) : Math.round(data.main.temp);
             temp.className = feelsLike ? "feelsLike" : "";
-            city.innerHTML = data.name;
+            city.innerHTML = "苏州市";
             description.innerHTML = data.weather[0].description;
             lastUpdate.innerHTML = momentWithCorrectUtcOffset(new Date()).format(timeFormat) + "/" + momentWithCorrectUtcOffset(new Date(data.dt * 1000)).format(timeFormat);
 

@@ -1,4 +1,5 @@
-html, body {
+html,
+body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -48,7 +49,7 @@ html.night {
 
 #temp {
     font-size: 200px;
-    font-size: 28rem;
+    font-size: 18rem;
     display: inline-block;
 }
 
@@ -163,13 +164,14 @@ html.night {
 }
 
 .landscape #city {
+    /* display: none; */
     font-size: 35.4px;
     font-size: 7rem;
 }
 
 .landscape #temp {
     font-size: 141.7px;
-    font-size: 28rem;
+    font-size: 22rem;
 }
 
 .landscape #lastUpdate {
@@ -220,6 +222,7 @@ html.night {
     width: 19.5%;
 }
 
-.feelsLike, .feelsLike * {
+.feelsLike,
+.feelsLike * {
     font-style: italic;
 }

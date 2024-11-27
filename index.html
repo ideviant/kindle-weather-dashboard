@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="cs">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport"
-          content="width=320, initial-scale=1, maximum-scale=1, user-scalable=0, target-densitydpi=medium-dpi">
+        content="width=320, initial-scale=1, maximum-scale=1, user-scalable=0, target-densitydpi=medium-dpi">
     <script src="vendor/moment/moment-with-locales.js" type="text/javascript"></script>
     <script src="config.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="vendor/weathericons/css/weather-icons.css"/>
-    <link rel="stylesheet" type="text/css" href="css/custom-icons.css"/>
-    <link rel="stylesheet" type="text/css" href="css/kindle.css"/>
+    <link rel="stylesheet" type="text/css" href="vendor/weathericons/css/weather-icons.css" />
+    <link rel="stylesheet" type="text/css" href="css/custom-icons.css" />
+    <link rel="stylesheet" type="text/css" href="css/kindle.css" />
 
     <script type="text/javascript">
         var apiProtocol = window.location.protocol === 'file:' ? 'https:' : window.location.protocol;
@@ -92,12 +93,18 @@
         function processForecastWeather(data) {
             dataTimeZone = data.city.timezone
 
+            var tempArray = [];
+
             for (var i = 0; i < forecastCount; i++) {
                 var forecast = data.list[i];
-
                 var feelsLike = tempType == "feelsLike";
+                console.log(forecast);
 
-                forecastsCells[i].temp.innerHTML = (feelsLike ? Math.round(forecast.main.feels_like) : Math.round(forecast.main.temp)) + unitsSymbolHtml;
+                tempArray.push(Math.round(forecast.main.temp));
+
+                forecastsCells[i].temp.innerHTML = Math.round(forecast.main.temp) + unitsSymbolHtml;
+
+                // forecastsCells[i].temp.innerHTML = (feelsLike ? Math.round(forecast.main.feels_like) : Math.round(forecast.main.temp)) + unitsSymbolHtml;
                 forecastsCells[i].icon.className = getIconClassName(forecast.weather[0], new Date(forecast.dt * 1000));
                 forecastsCells[i].desc.innerHTML = forecast.weather[0].description;
                 forecastsCells[i].time.innerHTML = momentWithCorrectUtcOffset(new Date(forecast.dt * 1000)).format(timeFormat);
@@ -105,6 +112,17 @@
                 forecastsCells[i].icon.style.transform = null;
                 forecastsCells[i].icon.style.webkitTransform = null;
             }
+
+            temp.innerHTML = Math.min(...tempArray) + " ~ " + Math.max(...tempArray) + "<i class=\"wi wi-celsius\"></i>";
+
+
+            console.log(tempArray);
+
+            console.log(Math.min(tempArray));
+            console.log(Math.max(tempArray));
+
+
+
 
             setMoonIconsRotation(data.city.coord.lat)
         }
@@ -151,7 +169,7 @@
 
             var appId = getUrlParameter("appId") ? getUrlParameter("appId") : api_appId;
             lang = getUrlParameter("lang") ? getUrlParameter("lang") : api_lang;
-            if (typeof(lang) === 'string') {
+            if (typeof (lang) === 'string') {
                 lang = lang.split(";", 1)
             }
             var units = getUrlParameter("units") ? getUrlParameter("units") : api_units;
@@ -205,7 +223,7 @@
             icon.className = getIconClassName(data.weather[0], new Date(data.dt * 1000));
             icon.style.transform = null;
             icon.style.webkitTransform = null;
-            temp.innerHTML = feelsLike ? Math.round(data.main.feels_like) : Math.round(data.main.temp);
+            // temp.innerHTML = feelsLike ? Math.round(data.main.feels_like) : Math.round(data.main.temp);
             temp.className = feelsLike ? "feelsLike" : "";
             city.innerHTML = data.name;
             description.innerHTML = data.weather[0].description;
@@ -220,7 +238,7 @@
             _sunsetHour = sunset.hour();
 
             sun.innerHTML = "<i class='" + getMoonIconClasses(getCurrentMoonPhase(), isNightMode()) + "'></i>&nbsp;&nbsp;<i class='wi wi-sunrise'></i> " + sunrise.format(timeFormat)
-                    + "&nbsp;&nbsp;<i class='wi wi-sunset'></i> " + sunset.format(timeFormat);
+                + "&nbsp;&nbsp;<i class='wi wi-sunset'></i> " + sunset.format(timeFormat);
             //  alert(data.name);
             setNightMode();
             setMoonIconsRotation(data.coord.lat)
@@ -269,7 +287,7 @@
             var elements = document.getElementsByClassName("moonIcon")
 
             for (var i = 0; i < elements.length; i++) {
-                var direction = elements[i].className.indexOf("moonFirstHalf") !== -1 ? -1 : 1 
+                var direction = elements[i].className.indexOf("moonFirstHalf") !== -1 ? -1 : 1
                 var transform = "rotate(" + (rotation * direction) + "deg)"
                 elements[i].style.transform = transform;
                 elements[i].style.webkitTransform = transform;
@@ -297,33 +315,33 @@
         // [normal, night]
         var moonIcons = [
             ["wi-moon-alt-new", "wi-moon-alt-full"],
-            ["wi-moon-alt-waxing-crescent-1","wi-moon-alt-waning-gibbous-1"],
-            ["wi-moon-alt-waxing-crescent-2","wi-moon-alt-waning-gibbous-2"],
-            ["wi-moon-alt-waxing-crescent-3","wi-moon-alt-waning-gibbous-3"],
-            ["wi-moon-alt-waxing-crescent-4","wi-moon-alt-waning-gibbous-4"],
-            ["wi-moon-alt-waxing-crescent-5","wi-moon-alt-waning-gibbous-5"],
-            ["wi-moon-alt-waxing-crescent-6","wi-moon-alt-waning-gibbous-6"],
-            ["wi-moon-alt-first-quarter","wi-moon-alt-third-quarter"],
-            ["wi-moon-alt-waxing-gibbous-1","wi-moon-alt-waning-crescent-1"],
-            ["wi-moon-alt-waxing-gibbous-2","wi-moon-alt-waning-crescent-2"],
-            ["wi-moon-alt-waxing-gibbous-3","wi-moon-alt-waning-crescent-3"],
-            ["wi-moon-alt-waxing-gibbous-4","wi-moon-alt-waning-crescent-4"],
-            ["wi-moon-alt-waxing-gibbous-5","wi-moon-alt-waning-crescent-5"],
-            ["wi-moon-alt-waxing-gibbous-6","wi-moon-alt-waning-crescent-6"],
-            ["wi-moon-alt-full","wi-moon-alt-new"],
-            ["wi-moon-alt-waning-gibbous-1","wi-moon-alt-waxing-crescent-1"],
-            ["wi-moon-alt-waning-gibbous-2","wi-moon-alt-waxing-crescent-2"],
-            ["wi-moon-alt-waning-gibbous-3","wi-moon-alt-waxing-crescent-3"],
-            ["wi-moon-alt-waning-gibbous-4","wi-moon-alt-waxing-crescent-4"],
-            ["wi-moon-alt-waning-gibbous-5","wi-moon-alt-waxing-crescent-5"],
-            ["wi-moon-alt-waning-gibbous-6","wi-moon-alt-waxing-crescent-6"],
-            ["wi-moon-alt-third-quarter","wi-moon-alt-first-quarter"],
-            ["wi-moon-alt-waning-crescent-1","wi-moon-alt-waxing-gibbous-1"],
-            ["wi-moon-alt-waning-crescent-2","wi-moon-alt-waxing-gibbous-2"],
-            ["wi-moon-alt-waning-crescent-3","wi-moon-alt-waxing-gibbous-3"],
-            ["wi-moon-alt-waning-crescent-4","wi-moon-alt-waxing-gibbous-4"],
-            ["wi-moon-alt-waning-crescent-5","wi-moon-alt-waxing-gibbous-5"],
-            ["wi-moon-alt-waning-crescent-6","wi-moon-alt-waxing-gibbous-6"],
+            ["wi-moon-alt-waxing-crescent-1", "wi-moon-alt-waning-gibbous-1"],
+            ["wi-moon-alt-waxing-crescent-2", "wi-moon-alt-waning-gibbous-2"],
+            ["wi-moon-alt-waxing-crescent-3", "wi-moon-alt-waning-gibbous-3"],
+            ["wi-moon-alt-waxing-crescent-4", "wi-moon-alt-waning-gibbous-4"],
+            ["wi-moon-alt-waxing-crescent-5", "wi-moon-alt-waning-gibbous-5"],
+            ["wi-moon-alt-waxing-crescent-6", "wi-moon-alt-waning-gibbous-6"],
+            ["wi-moon-alt-first-quarter", "wi-moon-alt-third-quarter"],
+            ["wi-moon-alt-waxing-gibbous-1", "wi-moon-alt-waning-crescent-1"],
+            ["wi-moon-alt-waxing-gibbous-2", "wi-moon-alt-waning-crescent-2"],
+            ["wi-moon-alt-waxing-gibbous-3", "wi-moon-alt-waning-crescent-3"],
+            ["wi-moon-alt-waxing-gibbous-4", "wi-moon-alt-waning-crescent-4"],
+            ["wi-moon-alt-waxing-gibbous-5", "wi-moon-alt-waning-crescent-5"],
+            ["wi-moon-alt-waxing-gibbous-6", "wi-moon-alt-waning-crescent-6"],
+            ["wi-moon-alt-full", "wi-moon-alt-new"],
+            ["wi-moon-alt-waning-gibbous-1", "wi-moon-alt-waxing-crescent-1"],
+            ["wi-moon-alt-waning-gibbous-2", "wi-moon-alt-waxing-crescent-2"],
+            ["wi-moon-alt-waning-gibbous-3", "wi-moon-alt-waxing-crescent-3"],
+            ["wi-moon-alt-waning-gibbous-4", "wi-moon-alt-waxing-crescent-4"],
+            ["wi-moon-alt-waning-gibbous-5", "wi-moon-alt-waxing-crescent-5"],
+            ["wi-moon-alt-waning-gibbous-6", "wi-moon-alt-waxing-crescent-6"],
+            ["wi-moon-alt-third-quarter", "wi-moon-alt-first-quarter"],
+            ["wi-moon-alt-waning-crescent-1", "wi-moon-alt-waxing-gibbous-1"],
+            ["wi-moon-alt-waning-crescent-2", "wi-moon-alt-waxing-gibbous-2"],
+            ["wi-moon-alt-waning-crescent-3", "wi-moon-alt-waxing-gibbous-3"],
+            ["wi-moon-alt-waning-crescent-4", "wi-moon-alt-waxing-gibbous-4"],
+            ["wi-moon-alt-waning-crescent-5", "wi-moon-alt-waxing-gibbous-5"],
+            ["wi-moon-alt-waning-crescent-6", "wi-moon-alt-waxing-gibbous-6"],
         ];
 
         var timeFormat = "HH:mm";
@@ -459,7 +477,7 @@
 
             // Set Cleanup for 4am
             var now = new Date();
-            var cleanTime = (new Date()).setHours(4,0,0);
+            var cleanTime = (new Date()).setHours(4, 0, 0);
             var diff = cleanTime - now;
             if (diff < 0) {
                 diff += 86400000;
@@ -467,7 +485,7 @@
             window.setTimeout("clearScreen()", diff);
         });
 
-        window.addEventListener("resize", function() {
+        window.addEventListener("resize", function () {
             rotate();
             setRem("resize");
         });
@@ -478,19 +496,19 @@
         // Paperwhite 3 viewport: 1072x1268 (in window.load event it is 0x0, in window.resized
         function viewport() {
             var e = window, a = 'inner';
-            if (!('innerWidth' in window )) {
+            if (!('innerWidth' in window)) {
                 a = 'client';
                 e = document.documentElement || document.body;
             }
-            return { width : e[ a+'Width' ] , height : e[ a+'Height' ] };
+            return { width: e[a + 'Width'], height: e[a + 'Height'] };
         }
 
         function setRem(prefix) {
             var v = viewport();
             var root = document.querySelector(":root");
             root.style.fontSize = ((forcedRotation === false ? v.height : v.width) / 100) + "px";
-           // console.log("setting root font size to: " + v.height)
-          //  alert(prefix + " viewport:" + v.width + "x" + v.height);
+            // console.log("setting root font size to: " + v.height)
+            //  alert(prefix + " viewport:" + v.width + "x" + v.height);
         }
 
         function setNightMode() {
@@ -536,7 +554,7 @@
 
         function momentLocale() {
             var lang = getUrlParameter("lang") ? getUrlParameter("lang") : api_lang;
-            if (typeof(lang) === 'string') {
+            if (typeof (lang) === 'string') {
                 var langs = lang.split(";", 2)
                 return langs.length > 1 ? langs[1] : langs[0];
             } else {
@@ -545,7 +563,7 @@
         }
 
         function clearScreen(times) {
-            if (typeof(times) == 'undefined') {
+            if (typeof (times) == 'undefined') {
                 times = 5;
             }
 
@@ -564,7 +582,7 @@
 
         function momentWithCorrectUtcOffset(dateTime) {
             // Default is auto
-            if (typeof(utcOffset) === 'undefined' || utcOffset === null || utcOffset === "") {
+            if (typeof (utcOffset) === 'undefined' || utcOffset === null || utcOffset === "") {
                 return moment(dateTime).utcOffset(dataTimeZone / 60, false)
             } else if (utcOffset === 'local') {
                 return moment(dateTime);
@@ -579,50 +597,51 @@
 
 
 <body>
-<div id="page">
-    <a id="city" href="./config.html"></a>
-    <div id="iconWrapper"><i id="icon"></i></div>
-    <div class="tempWrapper">
-        <div id="temp"></div>
-        <!--<i class="celsius wi wi-celsius"></i>-->
+    <div id="page">
+        <a id="city" href="./config.html"></a>
+        <div id="iconWrapper"><i id="icon"></i></div>
+        <div class="tempWrapper">
+            <div id="temp">
+            </div>
+        </div>
+        <div id="description"></div>
+        <div id="lastUpdate"></div>
+        <div class="forecast">
+            <div class="col col1">
+                <div id="time1" class="colTime"></div>
+                <div class="forecastIconWrapper"><i id="icon1" class="colIcon"></i></div>
+                <div id="temp1" class="colTemp"></div>
+                <div id="desc1" class="colDesc"></div>
+            </div>
+            <div class="col col2">
+                <div id="time2" class="colTime"></div>
+                <div class="forecastIconWrapper"><i id="icon2" class="colIcon"></i></div>
+                <div id="temp2" class="colTemp"></div>
+                <div id="desc2" class="colDesc"></div>
+            </div>
+            <div class="col col3">
+                <div id="time3" class="colTime"></div>
+                <div class="forecastIconWrapper"><i id="icon3" class="colIcon"></i></div>
+                <div id="temp3" class="colTemp"></div>
+                <div id="desc3" class="colDesc"></div>
+            </div>
+            <div class="col col4">
+                <div id="time4" class="colTime"></div>
+                <div class="forecastIconWrapper"><i id="icon4" class="colIcon"></i></div>
+                <div id="temp4" class="colTemp"></div>
+                <div id="desc4" class="colDesc"></div>
+            </div>
+            <div class="col col5">
+                <div id="time5" class="colTime"></div>
+                <div class="forecastIconWrapper"><i id="icon5" class="colIcon"></i></div>
+                <div id="temp5" class="colTemp"></div>
+                <div id="desc5" class="colDesc"></div>
+            </div>
+        </div>
+        <div id="date"></div>
+        <div id="sun"></div>
     </div>
-    <div id="description"></div>
-    <div id="lastUpdate"></div>
-    <div class="forecast">
-        <div class="col col1">
-            <div id="time1" class="colTime"></div>
-            <div class="forecastIconWrapper"><i id="icon1" class="colIcon"></i></div>
-            <div id="temp1" class="colTemp"></div>
-            <div id="desc1" class="colDesc"></div>
-        </div>
-        <div class="col col2">
-            <div id="time2" class="colTime"></div>
-            <div class="forecastIconWrapper"><i id="icon2" class="colIcon"></i></div>
-            <div id="temp2" class="colTemp"></div>
-            <div id="desc2" class="colDesc"></div>
-        </div>
-        <div class="col col3">
-            <div id="time3" class="colTime"></div>
-            <div class="forecastIconWrapper"><i id="icon3" class="colIcon"></i></div>
-            <div id="temp3" class="colTemp"></div>
-            <div id="desc3" class="colDesc"></div>
-        </div>
-        <div class="col col4">
-            <div id="time4" class="colTime"></div>
-            <div class="forecastIconWrapper"><i id="icon4" class="colIcon"></i></div>
-            <div id="temp4" class="colTemp"></div>
-            <div id="desc4" class="colDesc"></div>
-        </div>
-        <div class="col col5">
-            <div id="time5" class="colTime"></div>
-            <div class="forecastIconWrapper"><i id="icon5" class="colIcon"></i></div>
-            <div id="temp5" class="colTemp"></div>
-            <div id="desc5" class="colDesc"></div>
-        </div>
-    </div>
-    <div id="date"></div>
-    <div id="sun"></div>
-</div>
-<div id="cleaner"></div>
+    <div id="cleaner"></div>
 </body>
+
 </html>

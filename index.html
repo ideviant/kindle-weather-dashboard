@@ -216,7 +216,7 @@
             temp.className = feelsLike ? "feelsLike" : "";
             city.innerHTML = "苏州市";
             description.innerHTML = data.weather[0].description;
-            lastUpdate.innerHTML = momentWithCorrectUtcOffset(new Date()).format(timeFormat) + "/" + momentWithCorrectUtcOffset(new Date(data.dt * 1000)).format(timeFormat);
+            lastUpdate.innerHTML = momentWithCorrectUtcOffset(new Date()).format(timeFormat);
 
             date.innerHTML = momentWithCorrectUtcOffset(new Date()).format("dd, ll");
 
